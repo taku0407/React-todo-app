@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import "./styles.css";
 
 export const App = () => {
+  const [todoText, setTodoText] = useState("");
+
   // 未完了TODOリストのuseState、分割代入
   const [incompleteTodos, setIncompleteTodos] = useState([
     "まだやっていない1",
@@ -14,11 +16,24 @@ export const App = () => {
     "もうやった2"
   ]);
 
+  const onChangeTodoText = () => setTodoText(event.target.value);
+
+  const onClickAdd = () => {
+    if (todoText === "") return;
+    const newTodos = [...incompleteTodos, todoText];
+    setIncompleteTodos(newTodos);
+    setTodoText("");
+  };
+
   return (
     <>
       <div className="input-area">
-        <input placeholder="TODOを入力" />
-        <button>追加</button>
+        <input
+          placeholder="TODOを入力"
+          value={todoText}
+          onChange={onChangeTodoText}
+        />
+        <button onClick={onClickAdd}>追加</button>
       </div>
 
       <div className="incomplete-area">
